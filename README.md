@@ -2,6 +2,7 @@
 
 Simple Modern Art board game made in java with online multiplayer support and bots.  
 
+[Server](https://github.com/thefudgeishot/ModernArt-Online/releases/download/v1.0/ModernArt-Server.jar) | [Client](https://github.com/thefudgeishot/ModernArt-Online/releases/download/v1.0/ModernArt-Client.jar)
 ## Running the game
 
 > [!WARNING]
@@ -32,12 +33,12 @@ public int bid(int currentBid, Player player, Painting painting) { // current bi
 }
 ```
 > [!CAUTION]
-> For not very good reasons, there's no hard coded upper and lower bound checks for the bids coming from the bots, uhh... add balance checks through your code, see `AggressiveNPC.java`
+> For not very good reasons, there's no hard coded upper and lower bound checks for the bids coming from the bots, uhh... add balance checks through your code, see [AggressiveNPC.java](ModernArt-Server/src/AggressiveNPC.java)
 
 
 - Add your bot to the spawning pool
 
-In `ModernArt-Server/src/main.java` line 175 and 186
+In [ModernArt-Server/src/main.java](ModernArt-Server/src/main.java) line 175 and 186
 ```java
 NPC npc;
 int choice = ThreadLocalRandom.current().nextInt(0,2+1); // Default upper bound (2+1) increase '2' by one for each additional bot
