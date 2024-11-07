@@ -33,7 +33,7 @@ public int bid(int currentBid, Player player, Painting painting) { // current bi
 }
 ```
 > [!CAUTION]
-> For not very good reasons, there's no hard coded upper and lower bound checks for the bids coming from the bots, uhh... add balance checks through your code, see [AggressiveNPC.java](ModernArt-Server/src/AggressiveNPC.java)
+> For not very good reasons, there's no hard coded upper and lower bound checks for the bids coming from the bots, uhh... add balance checks through your code, see [AggressiveNPC.java](ModernArt-Server/src/AgressiveNPC.java)
 
 
 - Add your bot to the spawning pool
