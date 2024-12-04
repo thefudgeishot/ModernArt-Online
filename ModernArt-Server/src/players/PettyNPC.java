@@ -1,9 +1,13 @@
+package players;
+
+import paintings.*;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PettyNPC extends NPC{
+public class PettyNPC extends NPC {
 
-    public PettyNPC(String type, main main) {
-        super("PettyNPC", main);
+    public PettyNPC(String type) {
+        super("PettyNPC");
     }
 
     @Override

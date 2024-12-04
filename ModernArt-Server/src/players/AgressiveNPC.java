@@ -1,16 +1,19 @@
+package players;
+
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import paintings.*;
 
 public class AgressiveNPC extends NPC {
 
-    public AgressiveNPC(String type, main main) {
-        super("AggressiveNPC", main);
+    public AgressiveNPC(String type) {
+        super("AggressiveNPC");
     }
 
     @Override
     public int playCard(int minIndex, int maxIndex, Player player) {
         List<Painting> paintings = player.getHandPaintings();
-        int[] popularity = new int[main.INITIAL_COUNT.length];
+        int[] popularity = new int[5];
 
         for (int i = 0; i != paintings.size(); i++) { // rank hand cards in frequency
             popularity[paintings.get(i).getArtistId()] += 1;

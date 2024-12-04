@@ -1,11 +1,12 @@
+package players;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.net.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
+import paintings.*;
 /**
  * This class represents a player in the ModernArt game
  * 
@@ -181,7 +182,7 @@ public class Player {
     public Painting playPainting(NPC npc) throws InterruptedException {
 
         TimeUnit.SECONDS.sleep(1);
-        int index = npc.playCard(0,handPaintings.size(), this);
+        int index = npc.playCard(0,handPaintings.size()-1, this);
         Painting output = handPaintings.get(index);
         handPaintings.remove(index);
         return output;

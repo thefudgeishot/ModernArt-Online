@@ -1,3 +1,6 @@
+import players.*;
+import paintings.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -40,7 +43,23 @@ public class main {
         for (int i = 0; i != suitTable.length; i++) {
             suitTable[i] = new int[INITIAL_COUNT[i]];
             for (int j = 0; j != suitTable[i].length; j++) {
-                deck.add(new Painting(i));
+                int type = ThreadLocalRandom.current().nextInt(0, 3+1);
+
+                Painting painting;
+                switch (type) {
+                    case 1:
+                        painting = new oneOfferAuction(i);
+                        break;
+                    case 2:
+                        painting = new hiddenAuction(i);
+                        break;
+                    case 3:
+                        painting = new fixedPriceAuction(i);
+                        break;
+                    default:
+                        painting = new openAuction(i);
+                }
+                deck.add(painting);
             }
         }
 
@@ -175,13 +194,13 @@ public class main {
             int choice = ThreadLocalRandom.current().nextInt(0,2+1); // Default upper bound (2+1) increase '2' by one for each additional bot
             switch (choice) {
                 case 0: // default case
-                    npc = new NPC("Default", this);
+                    npc = new NPC("Default");
                     break;
                 case 1: // Aggressive NPC
-                    npc = new AgressiveNPC("anything doesn't really matter", this);
+                    npc = new AgressiveNPC("anything doesn't really matter");
                     break;
                 case 2: // Petty NPC
-                    npc = new PettyNPC("Seriously it doesn't matter", this);
+                    npc = new PettyNPC("Seriously it doesn't matter");
                     break;
                 // Add additional switch case here for your bot(s)
                         /*
@@ -189,7 +208,7 @@ public class main {
                             npc = new YourBot(type, main);
                          */
                 default:
-                    npc = new NPC("Default", this);
+                    npc = new NPC("Default");
             }
             bot.setNPC(npc);
             players[playerCnt++] = bot;
@@ -214,6 +233,10 @@ public class main {
                 Player player = players[currentPlayer];
                 requests.broadcastMessageToSockets(players, players[currentPlayer].getName() + " is playing...");
 
+                if (player.getHandPaintings().isEmpty()) { // no cards to play
+                    currentPlayer = (currentPlayer + 1) % (totalPlayers); // skip players turn
+                    continue;
+                }
                 Painting p;
                 if (!(player.getSocket() == null)) { // if it's a client
                     p = player.playPainting(player.getSocket());
@@ -291,6 +314,20 @@ public class main {
                 p.sellPainting(scoreForThisRound);
             }
         }
+
+        // show each player's money
+        int maxMoney = 0;
+        Player winner = players[0];
+        for (int i = 0; i != players.length; i++) {
+            if (maxMoney < players[i].getMoney()) {
+                maxMoney = players[i].getMoney();
+                winner = players[i];
+            }
+            requests.broadcastMessageToSockets(players, (players[i].getName() + " had $" + players[i].getMoney() + ".") );
+        }
+
+        // Who won?
+        requests.broadcastMessageToSockets(players, (winner.getName() + " has won with $" + maxMoney + "."));
 
         serverSocket.close();
 

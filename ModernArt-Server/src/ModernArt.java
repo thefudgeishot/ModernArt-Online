@@ -1,3 +1,6 @@
+import players.Player;
+import paintings.*;
+
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
@@ -111,10 +114,26 @@ public class ModernArt {
         for (int i = 0; i != suitTable.length; i++) {
             suitTable[i] = new int[INITIAL_COUNT[i]];
             for (int j = 0; j != suitTable[i].length; j++) {
-                deck.add(new Painting(i));
+                int type = ThreadLocalRandom.current().nextInt(1, 3+1);
+
+                Painting painting;
+                switch (type) {
+                    case 1:
+                        painting = new oneOfferAuction(i);
+                        break;
+                    case 2:
+                        painting = new hiddenAuction(i);
+                        break;
+                    case 3:
+                        painting = new fixedPriceAuction(i);
+                        break;
+                    default:
+                        painting = new openAuction(i);
+                }
+                deck.add(painting);
             }
         }
-        
+
         shuffle(deck);
     }
     /**

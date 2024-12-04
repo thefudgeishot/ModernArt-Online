@@ -1,20 +1,21 @@
+package players;
+
 import java.util.concurrent.ThreadLocalRandom;
+import paintings.*;
 
 public class NPC {
 
     private String type;
-    private main main;
 
-    public NPC(String type, main main) {
+    public NPC(String type) {
         this.type = type;
-        this.main = main;
     }
 
     public String getType() {
         return this.type;
     }
     public int playCard(int minIndex, int maxIndex, Player player) {
-        return ThreadLocalRandom.current().nextInt(minIndex, maxIndex);
+        return ThreadLocalRandom.current().nextInt(minIndex, maxIndex+1);
     }
 
     public int bid(int currentBid, Player player, Painting painting) {
